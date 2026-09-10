@@ -1,0 +1,118 @@
+# Schema/template for a single run's manifest. Copy this (along with the
+# rest of runs/_template/) to runs/<run_id>/manifest.yaml when starting a
+# new run, and fill in the top-level fields immediately.
+#
+# A stage may only be started once the immediately preceding stage's
+# `status` is `approved`. `status` values: pending | in_progress |
+# changes_requested | approved.
+
+run_id: "2026-09-10-0000001"
+title: "Initial Fabric platform setup for Knowit Datalytics"
+created: "2026-09-10"
+requested_by: "soham karfa"
+run_status: in_progress   # pending | in_progress | complete | abandoned
+
+stages:
+  requirement-analysis:
+    order: 1
+    file: 01-requirement-analysis.md
+    status: approved
+    approved_by: "soham karfa (user approval in conversation)"
+    approved_at: "2026-09-10T16:36:17+02:00"
+
+  current-state-assessment:
+    order: 2
+    file: 02-current-state-assessment.md
+    status: approved
+    approved_by: "soham karfa (user approval in conversation)"
+    approved_at: "2026-09-10T16:42:02+02:00"
+
+  gap-analysis:
+    order: 3
+    file: 03-gap-analysis.md
+    status: approved
+    approved_by: "soham karfa (user approval in conversation)"
+    approved_at: "2026-09-10T16:45:47+02:00"
+
+  solution-design:
+    order: 4
+    file: 04-solution-design.md
+    status: approved
+    approved_by: "soham karfa (user approval in conversation)"
+    approved_at: "2026-09-10T17:02:41+02:00"
+
+  iac-development:
+    order: 5
+    file: 05-iac-development.md
+    status: approved
+    approved_by: "soham karfa (user approval in conversation)"
+    approved_at: "2026-09-10T17:15:57+02:00"
+    files_written:
+      - platform-spec/environments/dev.yaml
+      - iac/environments/dev/main.tf
+      - iac/environments/dev/locals.tf
+      - iac/environments/dev/variables.tf
+      - iac/environments/dev/outputs.tf
+      - iac/environments/dev/terraform.tfvars.example
+      - iac/PLATFORM_SPEC_MAPPING.md
+      - iac/README.md
+      - README.md
+
+  validation-testing:
+    order: 6
+    file: 06-validation-testing.md
+    status: pending
+    approved_by: null
+    approved_at: null
+    verdict: null   # PASS | PASS WITH FINDINGS | BLOCKED
+
+  deployment-readiness:
+    order: 7
+    file: 07-deployment-readiness.md
+    status: pending
+    approved_by: null
+    approved_at: null
+
+notes: "Naming, tags, and operational inputs approved in conversation; recorded in Stage 3 design-input addendum. Stage 4 and the four Prompt 00 entity proposals approved; Stage 5 implementation written and approved; Stage 6 pending. Terraform unavailable."
+
+
+
+
+
+write_scope_exception:
+  authorized_by: "soham karfa (user authorization in conversation)"
+  authorized_at: "2026-09-10T16:57:27+02:00"
+  source: "User replied authorized to the enumerated Stage 5 write-scope exception."
+  applies_to_stage: iac-development
+  requires_stage_4_approval: true
+  additional_paths:
+    - iac/environments/dev/main.tf
+    - iac/environments/dev/locals.tf
+    - iac/environments/dev/variables.tf
+    - iac/environments/dev/outputs.tf
+    - iac/environments/dev/terraform.tfvars.example
+    - iac/PLATFORM_SPEC_MAPPING.md
+    - iac/README.md
+    - README.md
+  purpose: "Minimal dev composition and supporting documentation; defer G7 extras without changing shared modules."
+  authorizes_cloud_actions: false
+
+
+schema_amendment_approval:
+  stage: solution-design
+  status: approved
+  approved_by: soham-karfa
+  approved_at: '2026-09-10T17:08:25.3947430+02:00'
+  source: 'User: approve this dev-spec schema extension'
+  artifact: 04-solution-design.md
+  implementation_approval: approved
+
+
+spec_generator_approval:
+  prompt: knowledge-model-platform-engineering/prompt-library/platform-spec-generator.md
+  status: approved
+  approved_by: soham-karfa
+  approved_at: '2026-09-10T17:10:50+02:00'
+  file: platform-spec/environments/dev.yaml
+  source: 'User approved the complete dev.yaml proposal in conversation.'
+  write_status: 'Written under approved Stage 5 proposal'

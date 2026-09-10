@@ -1,10 +1,21 @@
-# Registry of every entity in this repo.
-# Empty template state — no engagement entities yet. Populate this list as
-# PLAT-* and PLAT-ADR-* entities are drafted and validated for Knowit Datalytics
-# (via prompt-library/platform-design-decision-maker.md and friends).
-
+# Validated design entities for the initial dev environment.
 repo: knowledge-model-platform-engineering
 parent_repo: NA
 parent_index: NA
-
-entities: []
+entities:
+  - id: PLAT-LZ-0001
+    domain: landing-zone
+    status: validated
+    path: domains/landing-zone/PLAT-LZ-0001.md
+  - id: PLAT-COMP-0001
+    domain: compute
+    status: validated
+    path: domains/compute/PLAT-COMP-0001.md
+  - id: PLAT-SEC-0001
+    domain: identity-security
+    status: validated
+    path: domains/identity-security/PLAT-SEC-0001.md
+  - id: PLAT-OPS-0001
+    domain: operations
+    status: validated
+    path: domains/operations/PLAT-OPS-0001.md

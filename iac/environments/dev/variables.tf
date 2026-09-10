@@ -10,31 +10,33 @@ variable "tenant_id" {
 }
 
 variable "location" {
-  description = "Azure region for this environment, for example westeurope."
+  description = "Azure region for the development environment."
   type        = string
+  default     = "swedencentral"
 }
 
 variable "project_name" {
   description = "Human-readable project name."
   type        = string
-  default     = "Data Project Platform"
+  default     = "Knowit Datalytics Fabric Platform"
 }
 
 variable "project_short_name" {
   description = "Short lowercase project token used in resource names."
   type        = string
-  default     = "dp"
+  default     = "kd"
 }
 
 variable "workload_name" {
   description = "Workload tag value."
   type        = string
-  default     = "data-platform"
+  default     = "fabric-platform"
 }
 
 variable "cost_center" {
-  description = "Cost center tag value."
+  description = "Approved cost allocation label; not a verified finance code."
   type        = string
+  default     = "knowit-datalytics-dev"
 }
 
 variable "data_classification" {
@@ -56,9 +58,16 @@ variable "associate_subscription_to_management_group" {
 }
 
 variable "resource_group_names" {
-  description = "Optional overrides for platform, network, data, and monitoring resource group names."
+  description = "Optional override for the single platform resource group."
   type        = map(string)
   default     = {}
+
+  validation {
+    condition = alltrue([
+      for key in keys(var.resource_group_names) : key == "platform"
+    ])
+    error_message = "Minimal dev supports only the platform resource group."
+  }
 }
 
 variable "vnet_address_space" {
@@ -180,6 +189,7 @@ variable "fabric_capacity_name" {
 variable "fabric_capacity_sku_name" {
   description = "Fabric capacity SKU, for example F2, F32, or F64."
   type        = string
+  default     = "F2"
 }
 
 variable "fabric_capacity_administration_members" {
@@ -213,7 +223,7 @@ variable "skip_capacity_state_validation" {
 variable "enable_workspace_identity" {
   description = "Whether Fabric workspaces get a system-assigned identity."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "fabric_workspace_rbac_assignments" {

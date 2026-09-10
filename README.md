@@ -174,3 +174,17 @@ Replace example values before running `apply`, especially subscription IDs, tena
 7. Keep changes traceable to the run's approved artifacts and `PLAT-*` / `PLAT-ADR-*` entity IDs.
 
 See [knowledge-model-platform-engineering/README.md](knowledge-model-platform-engineering/README.md) for the domain conventions and [iac/README.md](iac/README.md) for Terraform implementation details.
+
+## Initial minimal dev environment
+
+Run 2026-09-10-0000001 defines the minimal dev configuration: resource group
+rg-kd-fabric-dev-swc-001, F2 capacity fckddevswc001 in swedencentral, and
+workspace Knowit Datalytics - Dev with the approved administrator.
+
+The dev contract is platform-spec/environments/dev.yaml. Its implementation
+reuses the four existing resource-group, capacity, workspace, and RBAC modules.
+Additional infrastructure is deferred; test and production retain their scaffold.
+
+The deployment procedure and remaining prerequisites are documented in
+iac/README.md. Design and implementation approvals do not establish
+deployment readiness.

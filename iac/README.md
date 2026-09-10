@@ -70,3 +70,25 @@ Provider and resource shapes were checked against current documentation for:
 - Microsoft Fabric capacities ARM/Terraform AzAPI reference: https://learn.microsoft.com/en-us/azure/templates/microsoft.fabric/capacities
 
 `terraform` and `tofu` were not installed in the shell used to scaffold this repository, so `terraform fmt` and `terraform validate` could not be run there. Static checks were run for expected files, balanced braces, and unresolved `var.*`, `local.*`, and `module.*` references.
+
+## Minimal development configuration
+
+The dev root contains only azure-landing-zone, fabric-capacity,
+fabric-workspace, and fabric-rbac module calls. Its example configures
+one resource group, an F2 capacity in swedencentral, and one workspace
+with the approved user as Admin.
+
+Networking, storage, Key Vault, and monitoring modules remain available
+but are not invoked by dev. Their legacy dev input declarations are inert.
+Test and production retain their existing scaffold.
+
+Before human deployment, supply the actual subscription/tenant IDs and
+verified target-tenant principal ID in an untracked terraform.tfvars.
+Confirm deployment permissions, guest access, applicable licensing,
+capacity availability, a reviewed budget, and a protected existing backend.
+Backend provisioning is outside the initial scope.
+
+Terraform was unavailable while preparing this change. On Windows,
+installation can be requested with winget install Hashicorp.Terraform.
+Formatting and validation remain required before readiness approval.
+The kit never performs real-credential terraform plan or apply.

@@ -3,73 +3,96 @@ kind: FabricPlatform
 metadata:
   projectId: "Knowit Datalytics-Fabric-Platform"
   environment: dev
-  approvedEntities: []  # populate once PLAT-* / PLAT-ADR-* entities are validated for this engagement
+  approvedEntities:
+    - { id: PLAT-LZ-0001, status: validated }
+    - { id: PLAT-COMP-0001, status: validated }
+    - { id: PLAT-SEC-0001, status: validated }
+    - { id: PLAT-OPS-0001, status: validated }
+
 platform:
-  region: "[NEEDS HUMAN INPUT: Azure region]"
+  region: swedencentral
+
+  resourceGroups:
+    platform: rg-kd-fabric-dev-swc-001
+
+  tags:
+    environment: dev
+    workload: fabric-platform
+    owner: soham-karfa
+    cost_center: knowit-datalytics-dev
+    data_classification: internal
+    managed_by: terraform
+
   capacity:
     mode: "Microsoft Fabric capacity"
-    sku: "[NEEDS HUMAN INPUT: capacity SKU]"
+    name: fckddevswc001
+    sku: F2
     capacityId: "[NEEDS HUMAN INPUT: dev capacity id]"
+    administrationMembers:
+      - "soham.karfa_knowit.se#EXT#@knowitsandbox.onmicrosoft.com"
+
   workspaces:
-    - name: "[NEEDS HUMAN INPUT: dev workspace name]"
-      purpose: "development workspace for controlled promotion"
-      capacityRef: "[NEEDS HUMAN INPUT: dev capacity reference]"
+    - name: "Knowit Datalytics - Dev"
+      purpose: "Initial development workspace"
+      capacityRef: fckddevswc001
       domain: "[NEEDS HUMAN INPUT: workspace domain]"
+
   storage:
-    type: "ADLS Gen2"
-    zones:
-      - name: bronze
-        retention: "90 days hot, then 1 year archive, then delete"
-      - name: silver
-        retention: "2 years"
-      - name: gold
-        retention: "[NEEDS HUMAN INPUT: retention for regulated domains in {{DOMAIN_LIST}}]; 3 years for all other domains"
-    redundancy: "[NEEDS HUMAN INPUT: ADLS Gen2 redundancy SKU]"
+    enabled: false
+    type: null
+    zones: []
+    redundancy: null
+
   network:
-    posture: "private-by-default"
-    publicAccess: "explicitly approved exceptions only"
+    enabled: false
+    posture: "Deferred; no additional network resources in initial setup"
+    publicAccess: "No new public-access exception approved"
+
   identity:
     authentication: "Microsoft Entra ID"
     assignments:
-      - groupRef: "{{GROUP_PREFIX}}-Platform-Admins"
+      - principalRef: "soham.karfa_knowit.se#EXT#@knowitsandbox.onmicrosoft.com"
+        principalType: User
         role: administrator
-      - groupRef: "{{GROUP_PREFIX}}-Platform-Developers"
-        role: developer
-      # One consumer group per business domain in {{DOMAIN_LIST}}, e.g.
-      # "{{GROUP_PREFIX}}-<Domain>-Readers" — add one row per domain.
-      - groupRef: "[NEEDS HUMAN INPUT: consumer group(s) — one per domain in {{DOMAIN_LIST}}]"
-        role: consumer
-      - groupRef: "[NEEDS HUMAN INPUT: operator group]"
-        role: operator
+
+  operations:
+    owner: soham-karfa
+    administration: manual
+    capacitySizing: "Fixed F2; increases require a separate approved change"
+    performanceCommitment: "No initial performance or concurrency guarantee"
+    availability: "Best-effort development; planned downtime acceptable"
+    disasterRecovery: "No custom disaster-recovery or recovery-time commitment"
+    dataPolicy: "Synthetic or non-sensitive development data only"
+    recovery: "Development data must be reproducible or disposable"
+    configurationManagement: "Version-controlled infrastructure configuration"
+    costReview: "Weekly during the first month"
+    monthlyBudget: "[NEEDS HUMAN INPUT: reviewed monthly budget]"
+    terraformBackend: "[NEEDS HUMAN INPUT: approved protected Terraform backend configuration]"
+    scheduledAutomation: false
+    dedicatedMonitoring: false
+
 approval:
-  decisionIds: []  # populate once PLAT-ADR-* decisions are validated for this engagement
-  approvedBy: "[NEEDS HUMAN INPUT: named approver]"
-  approvedAt: "[NEEDS HUMAN INPUT: approval date]"
+  decisionIds: []
+  approvedBy: "soham karfa"
+  approvedAt: "2026-09-10T17:02:41+02:00"
+
 unresolvedInputs:
-  - field: platform.region
-    marker: "[NEEDS HUMAN INPUT: Azure region]"
-    reason: "Single-region deployment is stated, concrete region is not."
-  - field: platform.capacity.sku
-    marker: "[NEEDS HUMAN INPUT: capacity SKU]"
-    reason: "Source states smaller/F32-F64-class range, not a selected SKU."
   - field: platform.capacity.capacityId
     marker: "[NEEDS HUMAN INPUT: dev capacity id]"
-    reason: "Capacity ID is not stated."
-  - field: platform.workspaces[0]
-    marker: "[NEEDS HUMAN INPUT: dev workspace name]"
-    reason: "Workspace naming/domain/capacity reference are not stated."
-  - field: platform.storage.redundancy
-    marker: "[NEEDS HUMAN INPUT: ADLS Gen2 redundancy SKU]"
-    reason: "Only single-region baseline is stated."
-  - field: platform.identity.assignments (consumer groups)
-    marker: "[NEEDS HUMAN INPUT: consumer group(s) — one per domain in {{DOMAIN_LIST}}]"
-    reason: "Per-domain reader/consumer groups are not named for this engagement."
-  - field: platform.storage.zones (gold retention)
-    marker: "[NEEDS HUMAN INPUT: retention for regulated domains in {{DOMAIN_LIST}}]"
-    reason: "Regulated-domain retention baseline is not confirmed for this engagement."
-  - field: platform.identity.assignments (operator group)
-    marker: "[NEEDS HUMAN INPUT: operator group]"
-    reason: "Operator group is not named."
-  - field: approval.approvedBy
-    marker: "[NEEDS HUMAN INPUT: named approver]"
-    reason: "Sources do not name approver."
+    reason: "Resolved through Fabric capacity discovery during human deployment; never substitute the Azure resource ID."
+
+  - field: platform.workspaces[0].domain
+    marker: "[NEEDS HUMAN INPUT: workspace domain]"
+    reason: "No Fabric domain assignment was approved; this marker does not authorize creating or assigning a domain."
+
+  - field: platform.identity.assignments[0].principalRef
+    marker: "[NEEDS HUMAN INPUT: verified target-tenant principal object ID]"
+    reason: "Resolve the approved UPN to its target-tenant object ID for workspace RBAC; keep the actual ID outside committed artifacts."
+
+  - field: platform.operations.monthlyBudget
+    marker: "[NEEDS HUMAN INPUT: reviewed monthly budget]"
+    reason: "Requires a reviewed Sweden Central estimate before deployment readiness."
+
+  - field: platform.operations.terraformBackend
+    marker: "[NEEDS HUMAN INPUT: approved protected Terraform backend configuration]"
+    reason: "Supply an approved protected backend before deployment; backend provisioning is outside this scope."

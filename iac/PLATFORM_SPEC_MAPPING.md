@@ -40,3 +40,34 @@ Use this when converting `platform-spec/organization.yaml` plus `platform-spec/e
 - `platform-spec/` has no explicit budget field; keep budget values in `monthly_budget_amount`, `budget_alert_threshold`, and `budget_contact_emails`.
 - Fabric items such as lakehouses, notebooks, pipelines, and semantic models are intentionally excluded until the workspace foundation is deployed.
 - Private DNS is modeled as centrally owned by default. Supply `private_dns_zone_ids` unless the platform team is explicitly allowed to create zones.
+
+## Minimal dev contract
+
+For dev, use platform-spec/environments/dev.yaml and its validated
+PLAT-LZ-0001, PLAT-COMP-0001, PLAT-SEC-0001, and PLAT-OPS-0001 sources.
+Do not fill dev values from unresolved organization-level placeholders.
+
+| Dev spec field | Terraform mapping |
+|---|---|
+| platform.region | location |
+| platform.resourceGroups | resource_group_names |
+| platform.tags | tags and workload_name/cost_center/data_classification |
+| platform.capacity.name | fabric_capacity_name |
+| platform.capacity.sku | fabric_capacity_sku_name |
+| platform.capacity.administrationMembers | fabric_capacity_administration_members |
+| platform.capacity.capacityId | fabric_capacity_id_override; null enables discovery |
+| platform.workspaces[0] | fabric_workspaces.core |
+| platform.identity.assignments[0].principalRef | Resolve approved UPN to target-tenant principal_id locally |
+| platform.identity.assignments[0].principalType | principal_type = User |
+| platform.identity.assignments[0].role | administrator maps to Admin |
+| platform.storage.enabled = false | No storage module call in dev |
+| platform.network.enabled = false | No networking module call in dev |
+| platform.operations | Operating policy and readiness prerequisites; no monitoring/budget resources |
+
+capacityRef identifies the capacity logically; workspace assignment uses
+the resolved Fabric GUID, never the Azure resource ID. The initial single
+assignment targets workspace key core. Workspace managed identity is
+disabled per PLAT-COMP-0001. Workspace domain remains metadata only.
+
+The additional source_entities tag records validated design provenance.
+Actual subscription, tenant, and principal IDs remain outside committed files.
