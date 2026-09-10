@@ -6,11 +6,11 @@ kit: fabric_platform_development_kit
 schema_version: "1.0.0"
 
 repository_linkage:
-  this_repo: Data-Project-Platform
+  this_repo: Knowit-Datalytics-Fabric-Platform
   parent_repo:
-    name: Data-Project-Knowledge-Model
-    url: "{{PARENT_REPO_URL}}"
-    entities_index: entities.index.yaml   # path relative to parent repo root
+    name: NA
+    url: NA
+    entities_index: NA
   knowledge_model_path: knowledge-model-platform-engineering
   spec_path: platform-spec
   iac_path: iac

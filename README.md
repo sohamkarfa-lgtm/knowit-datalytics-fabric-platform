@@ -1,8 +1,7 @@
-# {{CLIENT}} — Fabric Platform Kit
+# Knowit Datalytics — Fabric Platform
 
-This repository contains the platform engineering design, generated platform specification, and Terraform boilerplate for {{CLIENT}}'s Microsoft Fabric data platform engagement.
+This repository contains the platform engineering design, generated platform specification, and Terraform boilerplate for Knowit Datalytics's Microsoft Fabric data platform engagement.
 
-> **Template repo.** This is the reusable Microsoft Fabric platform kit. Replace every `{{CLIENT}}` and `{{DOMAIN_LIST}}` placeholder before starting a new engagement — see [TEMPLATE_SETUP.md](TEMPLATE_SETUP.md) for the full checklist.
 
 The intended flow is:
 
@@ -39,11 +38,6 @@ a deployment-readiness package; live deployment is a separate human action
 after readiness approval. Azure CLI, REST, SDK and portal actions must not be
 used to bypass this boundary.
 
-## Repository Relationship
-
-The platform model is a child knowledge model of the parent knowledge model repo: {{PARENT_REPO_URL}}. The parent repository remains the source of enterprise context, requirements, target-state architecture, governance, delivery milestones, and architecture decisions.
-
-This repository links back to parent entities with `PARENT-*` IDs and keeps its own `PLAT-*` registry in [knowledge-model-platform-engineering/entities.index.yaml](knowledge-model-platform-engineering/entities.index.yaml).
 
 ## Repository Structure
 
@@ -124,23 +118,6 @@ The platform knowledge model records the validated design source of truth:
 - Identity and security: Microsoft Entra ID, group-based RBAC, managed identities, and Key Vault
 - Operations: cost visibility, budget alerts, monitoring, and CI/CD governance
 
-The current validated assumptions for {{CLIENT}} include:
-
-{{VALIDATED_ASSUMPTIONS}}
-<!--
-  Populate this block from the parent repo's Requirements/Platform Input Answer
-  entities once Stage 1 and the platform questionnaire are complete for this
-  engagement. Typical items to state explicitly (never assume a default):
-  - Initial data volume and expected growth
-  - Peak concurrent user/session count
-  - Monthly budget ceiling for Fabric + adjacent services (prod, and dev/test separately)
-  - Regulated domains ({{DOMAIN_LIST}}) and their retention baselines
--->
-- [NEEDS HUMAN INPUT: initial data volume / Milestone 1 load]
-- [NEEDS HUMAN INPUT: peak concurrent session count]
-- [NEEDS HUMAN INPUT: monthly budget ceiling for Fabric + adjacent services]
-- [NEEDS HUMAN INPUT: dev/test budget cap]
-- [NEEDS HUMAN INPUT: regulated domain(s) from {{DOMAIN_LIST}} and retention baseline]
 
 ## Platform Spec
 

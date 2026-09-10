@@ -1,7 +1,7 @@
 apiVersion: platform.data-project.io/v1alpha1
 kind: FabricPlatform
 metadata:
-  projectId: "{{CLIENT}}-Fabric-Platform"
+  projectId: "Knowit Datalytics-Fabric-Platform"
   environment: test
   approvedEntities: []  # populate once PLAT-* / PLAT-ADR-* entities are validated for this engagement
 platform:

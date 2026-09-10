@@ -1,8 +1,8 @@
 apiVersion: platform.data-project.io/v1alpha1
 kind: FabricPlatformOrg
 metadata:
-  organization: "[NEEDS HUMAN INPUT: organization name]"
-  project: "{{CLIENT}} Fabric Platform"
+  organization: "Knowit Datalytics"
+  project: "Knowit Datalytics Fabric Platform"
 shared:
   region: "[NEEDS HUMAN INPUT: Azure region]"
   managementGroup: "{{GROUP_PREFIX}}"  # example: "Data-Analytics" — Azure management group name for this engagement
@@ -28,9 +28,6 @@ approval:
   approvedBy: "[NEEDS HUMAN INPUT: named approver]"
   approvedAt: "[NEEDS HUMAN INPUT: approval date]"
 unresolvedInputs:
-  - field: metadata.organization
-    marker: "[NEEDS HUMAN INPUT: organization name]"
-    reason: "No organization name in scoped platform sources."
   - field: shared.region
     marker: "[NEEDS HUMAN INPUT: Azure region]"
     reason: "Sources state single-region only, not a concrete Azure region."

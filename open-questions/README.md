@@ -9,7 +9,3 @@ Populated by:
   (Prompt 01) → `<YYYY-MM-DD>-platform-input-questionnaire.md`
 - Stakeholder answers to that questionnaire → `oq_ans/<YYYY-MM-DD>-platform-input-answer.md`
 - The parent repo's current-state discovery prompt, if used for this engagement
-
-This folder is empty in the template. It will fill up with real `{{CLIENT}}`
-sizing, budget, and stakeholder answers as the engagement progresses — do not
-commit filled-in versions of these files back into this template repo.

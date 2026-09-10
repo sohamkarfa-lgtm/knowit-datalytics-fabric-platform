@@ -1,10 +1,6 @@
 # Platform Engineering Knowledge Model
 
-This child knowledge model records the validated Microsoft Fabric platform design decisions for {{CLIENT}}'s data & analytics engagement.
-
-## Parent model
-
-The parent knowledge model is at {{PARENT_REPO_URL}}. Its validated target-state, ADR, governance, delivery, and requirement entities remain the source constraints for this repository. Cross-repository links use the PARENT-* IDs defined by the parent entities index.
+This knowledge model records the validated Microsoft Fabric platform design decisions for Knowit Datalytics's data & analytics engagement.
 
 ## Domains
 
@@ -20,7 +16,7 @@ The parent knowledge model is at {{PARENT_REPO_URL}}. Its validated target-state
 This repo ships with **no validated design entities** — `entities.index.yaml`
 is empty and only the `_template.md` file exists in each domain and in `adr/`.
 Use `prompt-library/platform-design-decision-maker.md` (Prompt 00) to draft
-the first `PLAT-*` entities per domain for {{CLIENT}}, typically covering:
+the first `PLAT-*` entities per domain for Knowit Datalytics, typically covering:
 
 - Landing zone: management group / subscription boundaries for dev, test, and prod
 - Compute: Fabric capacity sizing, scaling posture, and cost guardrails

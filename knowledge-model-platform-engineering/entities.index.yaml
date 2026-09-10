@@ -1,10 +1,10 @@
 # Registry of every entity in this repo.
 # Empty template state — no engagement entities yet. Populate this list as
-# PLAT-* and PLAT-ADR-* entities are drafted and validated for {{CLIENT}}
+# PLAT-* and PLAT-ADR-* entities are drafted and validated for Knowit Datalytics
 # (via prompt-library/platform-design-decision-maker.md and friends).
 
 repo: knowledge-model-platform-engineering
-parent_repo: "{{PARENT_REPO_URL}}"
-parent_index: entities.index.yaml
+parent_repo: NA
+parent_index: NA
 
 entities: []
