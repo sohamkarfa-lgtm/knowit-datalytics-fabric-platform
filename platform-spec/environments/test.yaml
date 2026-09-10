@@ -1,0 +1,75 @@
+apiVersion: platform.data-project.io/v1alpha1
+kind: FabricPlatform
+metadata:
+  projectId: "{{CLIENT}}-Fabric-Platform"
+  environment: test
+  approvedEntities: []  # populate once PLAT-* / PLAT-ADR-* entities are validated for this engagement
+platform:
+  region: "[NEEDS HUMAN INPUT: Azure region]"
+  capacity:
+    mode: "Microsoft Fabric capacity"
+    sku: "[NEEDS HUMAN INPUT: capacity SKU]"
+    capacityId: "[NEEDS HUMAN INPUT: test capacity id]"
+  workspaces:
+    - name: "[NEEDS HUMAN INPUT: test workspace name]"
+      purpose: "test workspace for controlled promotion"
+      capacityRef: "[NEEDS HUMAN INPUT: test capacity reference]"
+      domain: "[NEEDS HUMAN INPUT: workspace domain]"
+  storage:
+    type: "ADLS Gen2"
+    zones:
+      - name: bronze
+        retention: "90 days hot, then 1 year archive, then delete"
+      - name: silver
+        retention: "2 years"
+      - name: gold
+        retention: "[NEEDS HUMAN INPUT: retention for regulated domains in {{DOMAIN_LIST}}]; 3 years for all other domains"
+    redundancy: "[NEEDS HUMAN INPUT: ADLS Gen2 redundancy SKU]"
+  network:
+    posture: "private-by-default"
+    publicAccess: "explicitly approved exceptions only"
+  identity:
+    authentication: "Microsoft Entra ID"
+    assignments:
+      - groupRef: "{{GROUP_PREFIX}}-Platform-Admins"
+        role: administrator
+      - groupRef: "{{GROUP_PREFIX}}-Platform-Developers"
+        role: developer
+      # One consumer group per business domain in {{DOMAIN_LIST}}, e.g.
+      # "{{GROUP_PREFIX}}-<Domain>-Readers" — add one row per domain.
+      - groupRef: "[NEEDS HUMAN INPUT: consumer group(s) — one per domain in {{DOMAIN_LIST}}]"
+        role: consumer
+      - groupRef: "[NEEDS HUMAN INPUT: operator group]"
+        role: operator
+approval:
+  decisionIds: []  # populate once PLAT-ADR-* decisions are validated for this engagement
+  approvedBy: "[NEEDS HUMAN INPUT: named approver]"
+  approvedAt: "[NEEDS HUMAN INPUT: approval date]"
+unresolvedInputs:
+  - field: platform.region
+    marker: "[NEEDS HUMAN INPUT: Azure region]"
+    reason: "Single-region deployment is stated, concrete region is not."
+  - field: platform.capacity.sku
+    marker: "[NEEDS HUMAN INPUT: capacity SKU]"
+    reason: "Source states smaller/F32-F64-class range, not a selected SKU."
+  - field: platform.capacity.capacityId
+    marker: "[NEEDS HUMAN INPUT: test capacity id]"
+    reason: "Capacity ID is not stated."
+  - field: platform.workspaces[0]
+    marker: "[NEEDS HUMAN INPUT: test workspace name]"
+    reason: "Workspace naming/domain/capacity reference are not stated."
+  - field: platform.storage.redundancy
+    marker: "[NEEDS HUMAN INPUT: ADLS Gen2 redundancy SKU]"
+    reason: "Only single-region baseline is stated."
+  - field: platform.identity.assignments (consumer groups)
+    marker: "[NEEDS HUMAN INPUT: consumer group(s) — one per domain in {{DOMAIN_LIST}}]"
+    reason: "Per-domain reader/consumer groups are not named for this engagement."
+  - field: platform.storage.zones (gold retention)
+    marker: "[NEEDS HUMAN INPUT: retention for regulated domains in {{DOMAIN_LIST}}]"
+    reason: "Regulated-domain retention baseline is not confirmed for this engagement."
+  - field: platform.identity.assignments (operator group)
+    marker: "[NEEDS HUMAN INPUT: operator group]"
+    reason: "Operator group is not named."
+  - field: approval.approvedBy
+    marker: "[NEEDS HUMAN INPUT: named approver]"
+    reason: "Sources do not name approver."
